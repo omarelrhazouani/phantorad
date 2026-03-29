@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Phantorad | Fantômes Dosimétriques</title>
+  <meta name="description" content="Phantorad - Fantômes dosimétriques anthropomorphes pour imagerie, radiothérapie et assurance qualité." />
+  <style>
+    :root {
+      --primary: #0b4f8a;
+      --primary-dark: #08385f;
+      --soft: #edf6fd;
+      --accent: #d8ebfb;
+      --steel: #667788;
+      --text: #1e2a35;
+      --white: #ffffff;
+      --shadow: 0 14px 40px rgba(8, 56, 95, 0.12);
+      --shadow-hover: 0 18px 48px rgba(8, 56, 95, 0.18);
+      --radius: 22px;
+      --transition: all 0.35s ease;
+      --max-width: 1220px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: Roboto, "Open Sans", Arial, sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, #ffffff 0%, #f8fbfe 100%);
+      line-height: 1.65;
+    }
+    a { text-decoration: none; color: inherit; }
+    .container { width: min(92%, var(--max-width)); margin: 0 auto; }
+
+    .header {
+      position: sticky; top: 0; z-index: 1000;
+      background: rgba(255,255,255,0.94);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(11,79,138,0.08);
+    }
+    .navbar {
+      min-height: 78px; display: flex; align-items: center; justify-content: space-between; gap: 20px;
+    }
+    .logo { font-size: 1.35rem; font-weight: 800; color: var(--primary-dark); }
+    .logo span { color: var(--steel); }
+    .nav-menu { display: flex; gap: 28px; list-style: none; }
+    .nav-link { font-weight: 600; position: relative; transition: var(--transition); }
+    .nav-link::after {
+      content: ""; position: absolute; left: 0; bottom: -6px; width: 0; height: 2px; background: var(--primary); transition: var(--transition);
+    }
+    .nav-link:hover { color: var(--primary); }
+    .nav-link:hover::after { width: 100%; }
+
+    .hamburger { display: none; width: 42px; height: 42px; border: none; background: transparent; flex-direction: column; gap: 5px; justify-content: center; cursor: pointer; }
+    .hamburger span { height: 3px; width: 100%; background: var(--primary); border-radius: 10px; transition: var(--transition); }
+    .hamburger.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+    .hero {
+      min-height: 92vh; display: flex; align-items: center; color: var(--white);
+      background:
+        linear-gradient(rgba(8,56,95,0.74), rgba(11,79,138,0.72)),
+        url('1.png') center top/cover no-repeat;
+    }
+    .hero-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 36px; align-items: center; padding: 90px 0; }
+    .badge {
+      display: inline-block; margin-bottom: 18px; padding: 9px 16px; border-radius: 999px;
+      background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.18); font-size: 0.94rem;
+    }
+    .hero h1 { font-size: clamp(2.4rem, 5vw, 4.5rem); line-height: 1.08; margin-bottom: 18px; }
+    .hero p { max-width: 680px; margin-bottom: 28px; color: rgba(255,255,255,0.94); }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; padding: 14px 28px; border-radius: 999px;
+      background: linear-gradient(135deg, #ffffff, #e9f3fc); color: var(--primary-dark); font-weight: 700; box-shadow: 0 12px 30px rgba(0,0,0,0.16); transition: var(--transition);
+    }
+    .btn:hover { transform: translateY(-4px); }
+    .hero-panel {
+      background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.18); backdrop-filter: blur(12px);
+      border-radius: 26px; padding: 28px;
+    }
+    .hero-panel h3 { margin-bottom: 14px; font-size: 1.3rem; }
+    .hero-panel ul { list-style: none; display: grid; gap: 12px; }
+    .hero-panel li { padding: 12px 14px; background: rgba(255,255,255,0.12); border-radius: 14px; }
+
+    section { padding: 90px 0; }
+    .section-title { max-width: 800px; margin: 0 auto 54px; text-align: center; }
+    .eyebrow {
+      display: inline-block; margin-bottom: 14px; padding: 8px 14px; border-radius: 999px; background: var(--soft); color: var(--primary); font-weight: 700; font-size: 0.92rem;
+    }
+    .section-title h2 { font-size: clamp(2rem, 4vw, 3rem); color: var(--primary-dark); margin-bottom: 12px; line-height: 1.18; }
+    .section-title p { color: var(--steel); }
+
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .card {
+      background: var(--white); border-radius: var(--radius); padding: 28px; box-shadow: var(--shadow); border: 1px solid rgba(11,79,138,0.08);
+      transition: var(--transition); position: relative; overflow: hidden;
+    }
+    .card::before {
+      content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: linear-gradient(90deg, var(--primary), #6db2e2);
+    }
+    .card:hover { transform: translateY(-7px); box-shadow: var(--shadow-hover); }
+    .icon {
+      width: 58px; height: 58px; display: grid; place-items: center; border-radius: 16px; background: linear-gradient(135deg, var(--soft), var(--accent));
+      color: var(--primary-dark); font-weight: 800; margin-bottom: 18px;
+    }
+    .card h3 { color: var(--primary-dark); margin-bottom: 10px; }
+    .card p { color: var(--steel); margin-bottom: 14px; }
+    .tag { display: inline-block; padding: 7px 12px; border-radius: 999px; background: #f1f5f8; color: var(--steel); font-size: 0.9rem; font-weight: 600; }
+
+    .split {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: stretch;
+    }
+    .panel {
+      background: var(--white); border-radius: 26px; padding: 32px; box-shadow: var(--shadow); border: 1px solid rgba(11,79,138,0.08);
+    }
+    .panel.primary {
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary)); color: var(--white);
+    }
+    .panel h3 { font-size: 1.55rem; margin-bottom: 14px; }
+    .panel p { color: inherit; opacity: 0.94; }
+    .list-item { padding: 16px 0; border-bottom: 1px solid rgba(102,119,136,0.18); }
+    .list-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .list-item h4 { color: var(--primary-dark); margin-bottom: 6px; }
+    .metrics { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 18px; }
+    .metric { padding: 12px 16px; border-radius: 16px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.16); min-width: 120px; }
+    .metric strong { display: block; margin-bottom: 4px; }
+
+    .footer {
+      margin-top: 80px; background: #0a1f34; color: rgba(255,255,255,0.86); padding: 34px 0;
+    }
+    .footer-content { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 18px; }
+
+    @media (max-width: 992px) {
+      .hero-grid, .grid-3, .split { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .hamburger { display: flex; }
+      .nav-menu {
+        position: absolute; top: 78px; left: 0; right: 0; flex-direction: column; align-items: flex-start; gap: 18px; padding: 24px 20px;
+        background: rgba(255,255,255,0.98); border-bottom: 1px solid rgba(11,79,138,0.08);
+        transform: translateY(-140%); opacity: 0; pointer-events: none; transition: var(--transition);
+      }
+      .nav-menu.active { transform: translateY(0); opacity: 1; pointer-events: auto; }
+      section { padding: 76px 0; }
+      .hero-grid { padding: 70px 0; }
+    }
+    @media (max-width: 540px) {
+      .btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container navbar">
+      <a class="logo" href="#accueil">Phanto<span>rad.com</span></a>
+      <nav>
+        <button class="hamburger" id="hamburger" aria-label="Ouvrir le menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-menu" id="navMenu">
+          <li><a class="nav-link" href="#accueil">Accueil</a></li>
+          <li><a class="nav-link" href="#gamme">Gamme</a></li>
+          <li><a class="nav-link" href="#applications">Applications</a></li>
+          <li><a class="nav-link" href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero" id="accueil">
+    <div class="container hero-grid">
+      <div>
+        <div class="badge">Fantômes anthropomorphes • Imagerie • Radiothérapie • QA</div>
+        <h1>Fantômes dosimétriques de nouvelle génération</h1>
+        <p>
+          Phantorad développe des fantômes spécialisés pour l’imagerie médicale, la radiothérapie et l’assurance qualité, avec une approche centrée sur la précision géométrique, la reproductibilité et l’intégration de détecteurs.
+        </p>
+        <a href="#gamme" class="btn">Découvrir la gamme</a>
+      </div>
+      <div class="hero-panel">
+        <h3>Domaines couverts</h3>
+        <ul>
+          <li>Fantômes pédiatriques et cérébraux</li>
+          <li>Supports pour OSL et chambres “stylo”</li>
+          <li>Solutions dédiées à l’alignement QA</li>
+          <li>Applications académiques, cliniques et industrielles</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="gamme">
+    <div class="container">
+      <div class="section-title">
+        <span class="eyebrow">Gamme Phantorad</span>
+        <h2>Une architecture pensée pour la mesure et la validation</h2>
+        <p>Chaque fantôme est conçu pour répondre à un besoin précis en dosimétrie, contrôle qualité et caractérisation expérimentale.</p>
+      </div>
+      <div class="grid-3">
+        <article class="card">
+          <div class="icon">NZ</div>
+          <h3>NZPH</h3>
+          <p>Tête pédiatrique entière pour imagerie et radiothérapie, avec une conception adaptée aux études anatomiques et dosimétriques.</p>
+          <span class="tag">CaCO3 / TiO2</span>
+        </article>
+        <article class="card">
+          <div class="icon">BN</div>
+          <h3>BNZPH</h3>
+          <p>Fantôme brain avec inserts pour chambres “stylo” et OSL, conçu pour les mesures locales et les protocoles comparatifs avancés.</p>
+          <span class="tag">OSL & chambres stylo</span>
+        </article>
+        <article class="card">
+          <div class="icon">QA</div>
+          <h3>BNZPH_GLADIATOR</h3>
+          <p>Fantôme hybride cubique offrant un alignement QA parfait et une excellente répétabilité dans les procédures de vérification.</p>
+          <span class="tag">Hybrid Cubic QA</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="applications">
+    <div class="container">
+      <div class="section-title">
+        <span class="eyebrow">Applications</span>
+        <h2>Des fantômes conçus pour des usages exigeants</h2>
+        <p>De la recherche académique à la routine clinique, Phantorad s’intègre dans des environnements où la précision est essentielle.</p>
+      </div>
+      <div class="split">
+        <div class="panel primary">
+          <h3>Points forts</h3>
+          <p>Une conception orientée vers la compatibilité avec les détecteurs, la fidélité géométrique et la performance en QA.</p>
+          <div class="metrics">
+            <div class="metric"><strong>Précision</strong><span>Mesures reproductibles</span></div>
+            <div class="metric"><strong>Compatibilité</strong><span>OSL / chambres</span></div>
+            <div class="metric"><strong>QA</strong><span>Alignement optimisé</span></div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="list-item">
+            <h4>Imagerie médicale</h4>
+            <p>Évaluation des protocoles, comparaison des configurations et validation expérimentale.</p>
+          </div>
+          <div class="list-item">
+            <h4>Radiothérapie</h4>
+            <p>Support aux mesures dosimétriques, contrôles ciblés et développements méthodologiques.</p>
+          </div>
+          <div class="list-item">
+            <h4>Assurance qualité</h4>
+            <p>Alignement, répétabilité et vérification de procédures dans des environnements exigeants.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="container">
+      <div class="section-title">
+        <span class="eyebrow">Contact</span>
+        <h2>Parlons de votre projet</h2>
+        <p>Pour toute demande d’information, de collaboration ou de développement sur mesure.</p>
+      </div>
+      <div class="grid-3">
+        <article class="card"><h3>Contact</h3><p>Email : contact@Phantorad.com</p><p>Tél. : +212 6 00 00 00 00</p></article>
+        <article class="card"><h3>Mentions légales</h3><p>Phantorad — Fantômes dosimétriques anthropomorphes pour imagerie, radiothérapie et QA.</p></article>
+        <article class="card"><h3>Partenariat académique</h3><p><a href="https://www.uh1.ac.ma/" target="_blank" rel="noopener noreferrer">Université Hassan 1er de Settat</a></p></article>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>© 2026 Phantorad — Tous droits réservés.</p>
+      <div class="footer-links">
+        <a href="#contact">Contact</a>
+        <a href="#contact">Mentions légales</a>
+        <a href="https://www.uh1.ac.ma/" target="_blank" rel="noopener noreferrer">Université Hassan 1er de Settat</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('navMenu');
+    const navLinks = document.querySelectorAll('.nav-link');
+    hamburger.addEventListener('click', () => {
+      const isActive = navMenu.classList.toggle('active');
+      hamburger.classList.toggle('active');
+      hamburger.setAttribute('aria-expanded', isActive);
+    });
+    navLinks.forEach(link => link.addEventListener('click', () => {
+      navMenu.classList.remove('active');
+      hamburger.classList.remove('active');
+      hamburger.setAttribute('aria-expanded', 'false');
+    }));
+  </script>
+</body>
+</html>
